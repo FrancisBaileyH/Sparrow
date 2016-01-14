@@ -1,6 +1,6 @@
 import Foundation
 
 
-class IRCChannel {
+class Channel {
 
 }

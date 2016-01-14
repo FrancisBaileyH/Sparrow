@@ -2,14 +2,14 @@ import swiftysockets
 import Foundation
 
 
-class IRCServer: ConnectionDelegate {
+class Server: ConnectionDelegate {
 
   private var ip: IP
   private var port: Int
   private var logger: Logger
   private var socket: TCPServerSocket
-  private var clients: [IRCClientConnection]
-  private var channels: [IRCChannel]
+  private var clients: [ClientConnection]
+  private var channels: [Channel]
 
 
   init?(port: Int, logger: Logger) {
@@ -45,7 +45,7 @@ class IRCServer: ConnectionDelegate {
 
   func addClient(client: TCPClientSocket) {
 
-    let client = IRCClientConnection(socket: client, handler: self)
+    let client = ClientConnection(socket: client, handler: self)
     client.start()
 
     self.clients.append(client)

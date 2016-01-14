@@ -2,7 +2,7 @@ import swiftysockets
 import Foundation
 
 
-class IRCClientConnection {
+class ClientConnection {
 
 
   private var clientSocket: TCPClientSocket
@@ -22,19 +22,23 @@ class IRCClientConnection {
   func start() {
 
     let handlerThread = NSThread() {
-
       while true {
-        do {
-          if let message = try self.clientSocket.receiveString(untilDelimiter: "\n") {
-            print("Recieved from client \(message)")
-          }
-        }
-        catch _ {
-
-        }
+        self.readLine()
       }
     }
 
     handlerThread.start()
   }
+
+  private func readLine() {
+      do {
+        if let message = try self.clientSocket.receiveString(untilDelimiter: "\n") {
+          print("Recieved from client \(message)")
+        }
+      }
+      catch _ {
+
+      }
+  }
+
 }

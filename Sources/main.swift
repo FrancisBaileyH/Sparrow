@@ -8,5 +8,5 @@ class MockLogger: Logger {
 }
 
 
-let server = IRCServer(port: 10022, logger: MockLogger())
+let server = Server(port: 10022, logger: MockLogger())
 server?.listen()
