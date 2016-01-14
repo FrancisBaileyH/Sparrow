@@ -2,17 +2,17 @@ import swiftysockets
 import Foundation
 
 
-class IRCServer {
+class IRCServer: ConnectionDelegate {
 
   private var ip: IP
   private var port: Int
   private var logger: Logger
   private var socket: TCPServerSocket
-  private var clients: [TCPClientSocket]
+  private var clients: [IRCClientConnection]
   private var channels: [IRCChannel]
 
 
-  init?(port: port, logger: Logger) {
+  init?(port: Int, logger: Logger) {
     self.port = port
     self.logger = logger
     self.clients = []
@@ -23,7 +23,7 @@ class IRCServer {
       self.socket = try TCPServerSocket(ip: self.ip)
     }
     catch let error {
-      self.logger.log("Error creating server socket on port \(self.port)", Logger.Normal)
+      self.logger.log(error), Logger.Normal)
     }
   }
 
@@ -36,16 +36,27 @@ class IRCServer {
         self.addClient(client)
       }
       catch let error {
-        self.logger.log("Error accepting client connection", Logger.Verbose)
+        self.logger.log(error, Logger.Verbose)
       }
     }
   }
 
+
   func addClient(client: TCPClientSocket) {
+
+    let client = new IRCClientConnection(socket: client, hanlder: self)
+    client.start()
+
     self.clients.append(client)
   }
 
+
   func removeClient() {
+
+  }
+
+
+  func handleClientMessage() {
 
   }
 

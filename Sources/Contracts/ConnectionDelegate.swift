@@ -1,0 +1,6 @@
+
+protocol ConnectionDelegate {
+
+  func handleClientMessage()
+
+}
