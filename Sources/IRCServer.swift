@@ -22,8 +22,9 @@ class IRCServer: ConnectionDelegate {
       self.ip = try IP(port: self.port)
       self.socket = try TCPServerSocket(ip: self.ip)
     }
-    catch let error {
-      self.logger.log(error), Logger.Normal)
+    catch _ {
+      self.logger.log("Unable to initiate server.", logLevel: LogLevel.Normal)
+      return nil
     }
   }
 
@@ -32,11 +33,11 @@ class IRCServer: ConnectionDelegate {
 
     while true {
       do {
-        let client = try self.server.accept()
+        let client = try self.socket.accept()
         self.addClient(client)
       }
-      catch let error {
-        self.logger.log(error, Logger.Verbose)
+      catch _ {
+        self.logger.log("Unable to accept client.", logLevel: LogLevel.Verbose)
       }
     }
   }
@@ -44,7 +45,7 @@ class IRCServer: ConnectionDelegate {
 
   func addClient(client: TCPClientSocket) {
 
-    let client = new IRCClientConnection(socket: client, hanlder: self)
+    let client = IRCClientConnection(socket: client, handler: self)
     client.start()
 
     self.clients.append(client)

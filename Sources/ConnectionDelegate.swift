@@ -1,6 +1,4 @@
-
 protocol ConnectionDelegate {
 
   func handleClientMessage()
-
 }

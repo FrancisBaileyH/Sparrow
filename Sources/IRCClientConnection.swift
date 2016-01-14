@@ -9,12 +9,12 @@ class IRCClientConnection {
   private var delegate: ConnectionDelegate?
 
 
-  init(socket: TCPClientSocket, handler: ConnectionDelegate) {
-    self.clientSocket = socket
+  convenience init(socket: TCPClientSocket, handler: ConnectionDelegate) {
+    self.init(socket: socket)
     self.delegate = handler
   }
 
-  convenience init(socket: TCPClientSocket) {
+  init(socket: TCPClientSocket) {
     self.clientSocket = socket
   }
 
@@ -29,10 +29,12 @@ class IRCClientConnection {
             print("Recieved from client \(message)")
           }
         }
-        catch let error {
-          
+        catch _ {
+
         }
       }
     }
+
+    handlerThread.start()
   }
 }
