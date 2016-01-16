@@ -2,21 +2,19 @@ import swiftysockets
 import Foundation
 
 
-class Server: ConnectionDelegate {
+class Server {
 
   private var ip: IP
   private var port: Int
   private var logger: Logger
   private var socket: TCPServerSocket
-  private var clients: [ClientConnection]
-  private var channels: [Channel]
+  private var serverManager: ServerManager
 
 
   init?(port: Int, logger: Logger) {
     self.port = port
     self.logger = logger
-    self.clients = []
-    self.channels = []
+    self.serverManager = ServerManager()
 
     do {
       self.ip = try IP(port: self.port)
@@ -33,8 +31,8 @@ class Server: ConnectionDelegate {
 
     while true {
       do {
-        let client = try self.socket.accept()
-        self.addClient(client)
+        let connection = try self.socket.accept()
+        self.acceptConnection(connection)
       }
       catch _ {
         self.logger.log("Unable to accept client.", logLevel: LogLevel.Verbose)
@@ -43,23 +41,12 @@ class Server: ConnectionDelegate {
   }
 
 
-  func addClient(client: TCPClientSocket) {
+  func acceptConnection(connection: TCPClientSocket) {
 
-    let client = ClientConnection(socket: client, handler: self)
+    let client = ClientConnection(socket: connection, handler: self.serverManager)
     client.start()
 
-    self.clients.append(client)
+    self.serverManager.addClient(client)
   }
-
-
-  func removeClient() {
-
-  }
-
-
-  func handleClientMessage() {
-
-  }
-
 
 }

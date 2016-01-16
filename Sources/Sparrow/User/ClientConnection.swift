@@ -4,8 +4,8 @@ import Foundation
 
 class ClientConnection {
 
-
-  private var clientSocket: TCPClientSocket
+  private var initiated: Bool
+  private var socket: TCPClientSocket
   private var delegate: ConnectionDelegate?
 
 
@@ -14,30 +14,37 @@ class ClientConnection {
     self.delegate = handler
   }
 
+
   init(socket: TCPClientSocket) {
-    self.clientSocket = socket
+    self.socket = socket
+    self.initiated = false
   }
+
 
   /*
    * Initiate a thread to handle client transmissions
   */
   func start() {
 
-    let handlerThread = NSThread() {
-      while true {
-        self.readLine()
-      }
-    }
+    if !self.initiated {
 
-    handlerThread.start()
+      let handlerThread = NSThread() {
+        while true {
+          self.readLine()
+        }
+      }
+
+      handlerThread.start()
+    }
   }
+
 
   /*
    *
   */
   private func readLine() {
       do {
-        if let message = try self.clientSocket.receiveString(untilDelimiter: "\n") {
+        if let message = try self.socket.receiveString(untilDelimiter: "\n") {
           print("Recieved from client \(message)")
           self.parseMessage(message)
         }
@@ -47,22 +54,29 @@ class ClientConnection {
       }
   }
 
+
   private func parseMessage(message: String) {
 
     if let parsedMsg = Parser.parse(message) {
 
       if let command = CommandFactory.build(parsedMsg) {
-        command.execute(nil)
+        self.delegate?.handleClientCommand(command)
       }
       else {
-        print("Error Occurred")
+
       }
     }
   }
 
 
   func sendLine(message: String) {
+    do {
+      try self.socket.sendString(message)
+      try self.socket.flush()
+    }
+    catch _ {
 
+    }
   }
 
 }
