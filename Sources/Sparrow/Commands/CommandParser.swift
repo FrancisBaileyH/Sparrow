@@ -8,7 +8,7 @@ struct ClientMessage {
 }
 
 
-class Parser {
+class CommandParser {
 
   /*
    * @TODO add error checking

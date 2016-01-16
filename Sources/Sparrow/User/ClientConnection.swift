@@ -57,7 +57,7 @@ class ClientConnection {
 
   private func parseMessage(message: String) {
 
-    if let parsedMsg = Parser.parse(message) {
+    if let parsedMsg = CommandParser.parse(message) {
 
       if let command = CommandFactory.build(parsedMsg) {
         self.delegate?.handleClientCommand(command)
