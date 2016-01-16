@@ -1,7 +1,17 @@
 class CommandFactory {
 
-  static func build(message: Message) {
+  let enabledCommands: [String: Command] = [
 
+  ]
+
+  static func build(message: Message) -> Command? {
+
+    if let strCommand = enabledCommands[message.command] {
+      let command = strCommand.init()
+      return command
+    }
+
+    return nil
   }
 
 }

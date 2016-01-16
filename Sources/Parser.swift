@@ -1,7 +1,7 @@
 import Foundation
 
 
-struct Message {
+struct ClientMessage {
   let commandPrefix: String?
   let command: String
   let parameters: [String]

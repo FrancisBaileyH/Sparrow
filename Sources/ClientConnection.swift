@@ -41,4 +41,9 @@ class ClientConnection {
       }
   }
 
+
+  public func sendLine(message: String) {
+    
+  }
+
 }
