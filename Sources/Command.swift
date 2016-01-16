@@ -3,9 +3,9 @@ import Foundation
 
 class Command {
 
-  private var message: Message
+  private var message: ClientMessage
 
-  init(message: Message) {
+  required init(message: ClientMessage) {
     self.message = message
   }
 

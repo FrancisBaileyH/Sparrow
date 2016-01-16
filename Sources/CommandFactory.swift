@@ -1,13 +1,13 @@
 class CommandFactory {
 
-  let enabledCommands: [String: Command] = [
-
+  static let enabledCommands: [String: Command.Type] = [
+    "NICK": NICK.self
   ]
 
-  static func build(message: Message) -> Command? {
+  static func build(message: ClientMessage) -> Command? {
 
-    if let strCommand = enabledCommands[message.command] {
-      let command = strCommand.init()
+    if let commandType = enabledCommands[message.command] {
+      let command = commandType.init(message: message)
       return command
     }
 

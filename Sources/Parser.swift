@@ -13,9 +13,11 @@ class Parser {
   /*
    * @TODO add error checking
   */
-  func parse(message: String) -> Message? {
+  static func parse(message: String) -> ClientMessage? {
 
-    let components = message.characters.split(" ").map(String.init)
+    var cleanedMessage = message
+    cleanedMessage.removeRange(message.endIndex.advancedBy(-1)..<message.endIndex)
+    let components = cleanedMessage.characters.split(" ").map(String.init)
 
     if components.count >= 2 {
 
@@ -37,7 +39,7 @@ class Parser {
         parameters.append(components[i])
       }
 
-      return Message(commandPrefix: commandPrefix, command: command, parameters: parameters)
+      return ClientMessage(commandPrefix: commandPrefix, command: command, parameters: parameters)
     }
     else {
       return nil

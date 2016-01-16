@@ -18,7 +18,9 @@ class ClientConnection {
     self.clientSocket = socket
   }
 
-
+  /*
+   * Initiate a thread to handle client transmissions
+  */
   func start() {
 
     let handlerThread = NSThread() {
@@ -30,10 +32,14 @@ class ClientConnection {
     handlerThread.start()
   }
 
+  /*
+   *
+  */
   private func readLine() {
       do {
         if let message = try self.clientSocket.receiveString(untilDelimiter: "\n") {
           print("Recieved from client \(message)")
+          self.parseMessage(message)
         }
       }
       catch _ {
@@ -41,9 +47,22 @@ class ClientConnection {
       }
   }
 
+  private func parseMessage(message: String) {
 
-  public func sendLine(message: String) {
-    
+    if let parsedMsg = Parser.parse(message) {
+
+      if let command = CommandFactory.build(parsedMsg) {
+        command.execute(nil)
+      }
+      else {
+        print("Error Occurred")
+      }
+    }
+  }
+
+
+  func sendLine(message: String) {
+
   }
 
 }
