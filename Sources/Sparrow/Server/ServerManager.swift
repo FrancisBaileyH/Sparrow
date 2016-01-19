@@ -1,21 +1,19 @@
+class ServerManager: ConnectionDelegate, Broadcastable {
 
-
-
-class ServerManager: ConnectionDelegate {
-
-  private var clients: [ClientConnection]
-  private var channels: [Channel]
+  private var unidentifiedClients: [ClientConnection]
+  private var clients: [Client]
+  private var channels: [String: Channel]
 
 
   init() {
-    self.channels = []
+    self.unidentifiedClients = []
+    self.channels = [:]
     self.clients = []
   }
 
 
   func addClient(client: ClientConnection) {
-
-    self.clients.append(client)
+    self.unidentifiedClients.append((client))
   }
 
 
@@ -24,13 +22,32 @@ class ServerManager: ConnectionDelegate {
   }
 
 
-  func handleClientCommand(command: Command) {
+  func handleClientCommand(command: Executable) {
+    command.execute(self)
+  }
+
+
+  func handleClientError(code: ReplyCode) {
 
   }
 
 
-  func handleClientError(code: ErrorCode) {
+  func broadcast(message: String, clientIds: [Int]) {
 
+    for id in clientIds {
+      if self.clients.indices.contains(id) {
+        let client = self.clients[id]
+        client.send(message)
+      }
+    }
+  }
+
+
+  func sendMessage(message: String, clientId: Int) {
+    if self.clients.indices.contains(clientId) {
+      let client = self.clients[clientId]
+      client.send(message)
+    }
   }
 
 

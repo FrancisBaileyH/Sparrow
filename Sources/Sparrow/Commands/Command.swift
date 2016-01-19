@@ -8,9 +8,4 @@ class Command {
   required init(message: ClientMessage) {
     self.message = message
   }
-
-  func execute(payload: AnyObject?) {
-
-  }
-
 }

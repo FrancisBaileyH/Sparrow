@@ -1,5 +1,5 @@
 protocol ConnectionDelegate {
 
-  func handleClientCommand(command: Command)
+  func handleClientCommand(command: Executable)
   // optional func handleClientError()
 }

@@ -1,7 +1,8 @@
-class NICK: Command {
+class NICK: Command, Executable {
 
-  override func execute(payload: AnyObject?) {
+  func execute(instance: ServerManager) -> ReplyCode? {
     print("Called")
+    return nil
   }
 
 }

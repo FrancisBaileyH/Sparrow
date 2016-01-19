@@ -1,6 +1,6 @@
-class USER: Command {
+class USER: Command, Executable {
 
-    override func execute(payload: AnyObject?) {
-
-    }
+  func execute(instance: ServerManager) -> ReplyCode? {
+    return nil
+  }
 }

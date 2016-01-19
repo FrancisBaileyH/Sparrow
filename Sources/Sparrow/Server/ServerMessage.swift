@@ -1,4 +1,4 @@
-public enum ErrorCode: Int {
+public enum ReplyCode: Int {
   case ERR_NOSUCHNICK = 401
   case ERR_NOSUCHSERVER = 402
   case ERR_NOSUCHCHANNEL = 403
@@ -50,10 +50,6 @@ public enum ErrorCode: Int {
   case ERR_NOOPERHOST = 491
   case ERR_UMODEUNKNOWNFLAG = 501
   case ERR_USERSDONTMATCH = 502
-}
-
-
-public enum ReplyCode: Int {
   case RPL_WELCOME = 001
   case RPL_YOURHOST = 002
   case RPL_CREATED = 003
