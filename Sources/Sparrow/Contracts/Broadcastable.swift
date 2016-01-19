@@ -1,6 +1,6 @@
 protocol Broadcastable {
 
 
-  func broadcast(message: String, clientIds: [Int])
+  func broadcast(message: String, nicks: [String])
 
 }

@@ -4,6 +4,7 @@ import Foundation
 
 class ClientConnection {
 
+  // private var id: Int
   private var initiated: Bool
   private var socket: TCPClientSocket
   private var delegate: ConnectionDelegate?
@@ -40,7 +41,7 @@ class ClientConnection {
 
 
   /*
-   *
+   * Read incoming messages and parse them
   */
   private func readLine() {
       do {
