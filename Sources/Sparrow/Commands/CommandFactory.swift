@@ -1,7 +1,8 @@
 class CommandFactory {
 
   static let enabledCommands: [String: Executable.Type] = [
-    "NICK": NICK.self
+    "NICK": NICK.self,
+    "USER": USER.self
   ]
 
   static func build(message: ClientMessage) -> Executable? {

@@ -1,19 +1,19 @@
 class ServerManager: ConnectionDelegate, Broadcastable {
 
-  private var unidentifiedClients: [ClientConnection]
   private var clients: [String: Client]
   private var channels: [String: Channel]
 
 
   init() {
-    self.unidentifiedClients = []
     self.channels = [:]
     self.clients = [:]
   }
 
 
-  func addClient(client: ClientConnection) {
-    self.unidentifiedClients.append((client))
+  func addClient(connection: ClientConnection) {
+    let clientId = connection.getId()
+    let client = Client(clientId: clientId, connection: connection)
+    self.clients[clientId] = client
   }
 
 
@@ -22,18 +22,18 @@ class ServerManager: ConnectionDelegate, Broadcastable {
   }
 
 
-  /*
-   * Remove a client from the unidentified list and
-   * add them to the clients list
-  */
-  func identifyClient(client: Client, clientId: Int) {
-    self.clients[client.getNick()] = client
-    self.unidentifiedClients.removeAtIndex(clientId)
+  func getClient(clientId: String) -> Client? {
+
+    if let client = self.clients[clientId] {
+      return client
+    }
+
+    return nil
   }
 
 
-  func handleClientCommand(command: Executable) {
-    command.execute(self)
+  func handleClientCommand(clientId: String, command: Executable) {
+    command.execute(clientId, managerInstance: self)
   }
 
 
@@ -49,6 +49,22 @@ class ServerManager: ConnectionDelegate, Broadcastable {
         client.send(message)
       }
     }
+  }
+
+
+  /*
+   * Generate a unique client id to associate with
+   * each connection/client
+  */
+  func createClientId() -> String {
+
+    let clientId = Random.randomString(12)
+
+    guard let _ = self.clients[clientId] else {
+      return clientId
+    }
+
+    return self.createClientId()
   }
 
 

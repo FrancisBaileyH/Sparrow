@@ -1,4 +1,5 @@
 protocol Executable {
   init(message: ClientMessage)
-  func execute(instance: ServerManager) -> ReplyCode?
+  func execute(clientId: String, managerInstance: ServerManager) -> ReplyCode?
+  // func cancel()
 }

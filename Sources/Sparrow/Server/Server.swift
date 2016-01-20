@@ -42,10 +42,10 @@ class Server {
 
 
   func acceptConnection(connection: TCPClientSocket) {
-
-    let client = ClientConnection(socket: connection, handler: self.serverManager)
+    let clientId = self.serverManager.createClientId()
+    let client = ClientConnection(clientId: clientId, socket: connection, handler: self.serverManager)
     client.start()
-
+    print("Client Added: \(clientId)")
     self.serverManager.addClient(client)
   }
 

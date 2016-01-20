@@ -4,19 +4,20 @@ import Foundation
 
 class ClientConnection {
 
-  // private var id: Int
+  private var clientId: String
   private var initiated: Bool
   private var socket: TCPClientSocket
   private var delegate: ConnectionDelegate?
 
 
-  convenience init(socket: TCPClientSocket, handler: ConnectionDelegate) {
-    self.init(socket: socket)
+  convenience init(clientId id: String, socket: TCPClientSocket, handler: ConnectionDelegate) {
+    self.init(clientId: id, socket: socket)
     self.delegate = handler
   }
 
 
-  init(socket: TCPClientSocket) {
+  init(clientId id: String, socket: TCPClientSocket) {
+    self.clientId = id
     self.socket = socket
     self.initiated = false
   }
@@ -55,13 +56,15 @@ class ClientConnection {
       }
   }
 
-
+  // @TODO send client ID with handleClientCommand so that
+  // ServerManager can identifyClient and a Client class can
+  // be instantiated
   private func parseMessage(message: String) {
 
     if let parsedMsg = CommandParser.parse(message) {
 
       if let command = CommandFactory.build(parsedMsg) {
-        self.delegate?.handleClientCommand(command)
+        self.delegate?.handleClientCommand(self.clientId, command: command)
       }
       else {
 
@@ -70,14 +73,27 @@ class ClientConnection {
   }
 
 
-  func sendLine(message: String) {
+  func sendLine(serverName: String, replyCode: ReplyCode, message: String) {
     do {
-      try self.socket.sendString(message)
+
+      let response = ":"
+        + serverName
+        + " "
+        + replyCode.rawValue
+        + " "
+        + message
+
+      try self.socket.sendString(response)
       try self.socket.flush()
     }
     catch _ {
 
     }
+  }
+
+
+  func getId() -> String {
+    return self.clientId
   }
 
 }
