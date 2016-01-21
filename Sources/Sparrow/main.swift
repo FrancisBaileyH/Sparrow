@@ -1,5 +1,8 @@
 
-
+/*
+ * @TODO really need to find a logging library and implement,
+ * no need to have this mock logger anymore
+*/
 class MockLogger: Logger {
 
   func log(message: String, logLevel: LogLevel) {

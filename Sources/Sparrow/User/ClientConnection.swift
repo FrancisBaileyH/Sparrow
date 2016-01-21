@@ -56,9 +56,9 @@ class ClientConnection {
       }
   }
 
-  // @TODO send client ID with handleClientCommand so that
-  // ServerManager can identifyClient and a Client class can
-  // be instantiated
+  /*
+   * @TODO handle invalid command return and parsing errors
+  */
   private func parseMessage(message: String) {
 
     if let parsedMsg = CommandParser.parse(message) {
@@ -73,17 +73,9 @@ class ClientConnection {
   }
 
 
-  func sendLine(serverName: String, replyCode: ReplyCode, message: String) {
+  func sendLine(message: String) {
     do {
-
-      let response = ":"
-        + serverName
-        + " "
-        + replyCode.rawValue
-        + " "
-        + message
-
-      try self.socket.sendString(response)
+      try self.socket.sendString(message)
       try self.socket.flush()
     }
     catch _ {

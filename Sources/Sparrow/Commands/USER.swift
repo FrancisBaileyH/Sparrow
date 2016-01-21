@@ -5,13 +5,33 @@ class USER: Command, Executable {
     if let client = managerInstance.getClient(clientId) {
 
       if !client.isFullyIdentified() {
-        client.setRealName(self.message.parameters[0])
+        client.setUserName(self.message.parameters[0])
         client.identify()
-        client.sendWelcome()
+        self.sendRegistrationAcknowledgement(client)
       }
 
     }
 
     return nil
+  }
+
+
+  /*
+   * @TODO add error handling
+   *
+   * Send the "Welcome" reply to the client to acknowledge the
+   * connection has been registered
+  */
+  func sendRegistrationAcknowledgement(client: Client) {
+
+    if let identifier = client.getFullyIdentifiedName() {
+      let message = identifier + " :Welcome to Test"
+      let serverMessage = ServerMessageFactory.build(ReplyCode.RPL_WELCOME, message: message)
+
+      client.send(serverMessage)
+    }
+    else {
+      // something wrong has happened
+    }
   }
 }

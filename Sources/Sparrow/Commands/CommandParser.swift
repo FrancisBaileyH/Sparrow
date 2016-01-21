@@ -11,7 +11,7 @@ struct ClientMessage {
 class CommandParser {
 
   /*
-   * @TODO add error checking
+   * @TODO add error checking/more resiliant parsing
   */
   static func parse(message: String) -> ClientMessage? {
 
