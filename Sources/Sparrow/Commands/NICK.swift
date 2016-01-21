@@ -1,6 +1,13 @@
+/*
+ * Author: fbailey
+ * Date:   2016-01-21T14:29:21-08:00
+ * Last modified by:   fbailey
+ * Last modified time: 2016-01-21T14:29:21-08:00
+*/
+
 class NICK: Command, Executable {
 
-  func execute(clientId: String, managerInstance: ServerManager) -> ReplyCode? {
+  func execute(clientId: String, managerInstance: ServerManager) {
 
     let client = managerInstance.getClientManager().getClient(clientId)
 
@@ -8,15 +15,13 @@ class NICK: Command, Executable {
 
       let nick = self.message.parameters[0]
 
-       if let error = self.validateNick(nick){
-         return error
+       if let _ = self.validateNick(nick){
+
        }
        else {
          client?.setNick(nick)
        }
     }
-
-    return ReplyCode.ERR_NONICKNAMEGIVEN
   }
 
  /*
