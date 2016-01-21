@@ -21,6 +21,8 @@ class ClientConnection {
 
   private var socket: TCPClientSocket
 
+  private let MAX_MESSAGE_SIZE = 512
+
   init(socket: TCPClientSocket) {
     self.socket = socket
   }
@@ -34,6 +36,11 @@ class ClientConnection {
       do {
         if let message = try self.socket.receiveString(untilDelimiter: "\n") {
           print("Recieved from client \(message)")
+
+          guard sizeofValue(message) <= self.MAX_MESSAGE_SIZE else {
+            throw ConnectionError.MessageSizeExceededError
+          }
+
           return try self.parseMessage(message)
         }
 
