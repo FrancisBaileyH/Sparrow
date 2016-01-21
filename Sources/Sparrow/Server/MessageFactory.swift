@@ -1,4 +1,4 @@
-class ServerMessageFactory {
+class MessageFactory {
 
   /*
    * @TODO - remove. This is a temp structure to work on some other impending features

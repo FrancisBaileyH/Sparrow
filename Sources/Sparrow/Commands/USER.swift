@@ -2,14 +2,13 @@ class USER: Command, Executable {
 
   func execute(clientId: String, managerInstance: ServerManager) -> ReplyCode? {
 
-    if let client = managerInstance.getClient(clientId) {
+    if let client = managerInstance.getClientManager().getClient(clientId) {
 
-      if !client.isFullyIdentified() {
+      if !client.isRegistered() && client.getNick() != nil {
         client.setUserName(self.message.parameters[0])
-        client.identify()
+        client.register()
         self.sendRegistrationAcknowledgement(client)
       }
-
     }
 
     return nil
@@ -24,14 +23,10 @@ class USER: Command, Executable {
   */
   func sendRegistrationAcknowledgement(client: Client) {
 
-    if let identifier = client.getFullyIdentifiedName() {
-      let message = identifier + " :Welcome to Test"
-      let serverMessage = ServerMessageFactory.build(ReplyCode.RPL_WELCOME, message: message)
+      let message = ":Welcome to Test"
 
-      client.send(serverMessage)
-    }
-    else {
-      // something wrong has happened
-    }
+      if let identifier = client.getFullyIdentifiedName() {
+        client.send(identifier, replyCode: ReplyCode.RPL_WELCOME, message: message)
+      }
   }
 }
