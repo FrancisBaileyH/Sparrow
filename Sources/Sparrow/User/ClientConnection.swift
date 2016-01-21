@@ -1,3 +1,11 @@
+/*
+ * Author: fbailey
+ * Date:   2016-01-21T13:53:44-08:00
+ * Last modified by:   fbailey
+ * Last modified time: 2016-01-21T13:53:44-08:00
+*/
+
+
 import swiftysockets
 import Foundation
 
@@ -13,7 +21,6 @@ enum ConnectionError: ErrorType {
 class ClientConnection {
 
   private var socket: TCPClientSocket
-
 
   init(socket: TCPClientSocket) {
     self.socket = socket

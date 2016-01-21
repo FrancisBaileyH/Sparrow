@@ -1,3 +1,11 @@
+/*
+ * Author: fbailey
+ * Date:   2016-01-21T13:50:48-08:00
+ * Last modified by:   fbailey
+ * Last modified time: 2016-01-21T13:50:48-08:00
+*/
+
+
 class ClientManager {
 
   /*

@@ -1,3 +1,10 @@
+/*
+ * Author: fbailey
+ * Date:   2016-01-21T13:49:48-08:00
+ * Last modified by:   fbailey
+ * Last modified time: 2016-01-21T13:49:52-08:00
+*/
+
 public enum ReplyCode: String {
   case ERR_NOSUCHNICK = "401"
   case ERR_NOSUCHSERVER = "402"

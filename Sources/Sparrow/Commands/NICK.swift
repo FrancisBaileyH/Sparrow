@@ -16,7 +16,7 @@ class NICK: Command, Executable {
        }
     }
 
-    return nil
+    return ReplyCode.ERR_NONICKNAMEGIVEN
   }
 
  /*
