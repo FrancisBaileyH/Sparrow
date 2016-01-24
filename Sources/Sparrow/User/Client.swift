@@ -15,18 +15,18 @@ class Client {
   private var realName: String?
   private var userName: String?
   private var hostName: String
-  private var connection: ClientConnection
+  private var connection: ConnectionInterface
   private var delegate: ConnectionDelegate?
   private var registered: Bool
 
 
-  convenience init(clientId id: String, hostName: String, connection: ClientConnection, handler: ConnectionDelegate) {
+  convenience init(clientId id: String, hostName: String, connection: ConnectionInterface, handler: ConnectionDelegate) {
     self.init(clientId: id, hostName: hostName, connection: connection)
     self.delegate = handler
   }
 
 
-  init(clientId id: String, hostName: String, connection: ClientConnection) {
+  init(clientId id: String, hostName: String, connection: ConnectionInterface) {
     self.id = id
     self.hostName = hostName
     self.connection = connection

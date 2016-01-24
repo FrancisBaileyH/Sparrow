@@ -17,11 +17,12 @@ enum ConnectionError: ErrorType {
 }
 
 
-class ClientConnection {
+class ClientConnection: ConnectionInterface {
 
   private var socket: TCPClientSocket
 
   private let MAX_MESSAGE_SIZE = 512
+
 
   init(socket: TCPClientSocket) {
     self.socket = socket
