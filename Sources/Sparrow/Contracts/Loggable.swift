@@ -1,3 +1,10 @@
+/*
+ * Author: fbailey
+ * Date:   2016-01-21T14:30:07-08:00
+ * Last modified by:   fbailey
+ * Last modified time: 2016-01-21T14:30:07-08:00
+*/
+
 protocol Logger {
 
   func log(message: String, logLevel: LogLevel)

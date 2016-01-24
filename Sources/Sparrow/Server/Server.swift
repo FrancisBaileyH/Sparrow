@@ -1,3 +1,10 @@
+/*
+ * Author: fbailey
+ * Date:   2016-01-21T13:51:01-08:00
+ * Last modified by:   fbailey
+ * Last modified time: 2016-01-21T13:51:01-08:00
+*/
+
 import swiftysockets
 import Foundation
 
@@ -41,18 +48,12 @@ class Server {
   }
 
   /*
-   * @TODO, may need to change the way threads are handled. At present
-   * threads closed when a connection is terminated this will tie in heavily
-   * with the server's connection maintenance (PING/PONG)
-   *
    * @TODO, need to get IP Address/Hostname
   */
   func acceptConnection(connection: TCPClientSocket) {
-    let clientId = self.serverManager.createClientId()
-    let client = ClientConnection(clientId: clientId, socket: connection, handler: self.serverManager)
-    client.start()
-    print("Client Added: \(clientId)")
-    self.serverManager.addClient(client)
+
+    let client = ClientConnection(socket: connection)
+    self.serverManager.addConnection(client)
   }
 
 }

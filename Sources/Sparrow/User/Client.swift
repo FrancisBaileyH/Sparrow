@@ -1,3 +1,13 @@
+/*
+ * Author: fbailey
+ * Date:   2016-01-21T13:55:17-08:00
+ * Last modified by:   fbailey
+ * Last modified time: 2016-01-21T13:55:17-08:00
+*/
+
+import Foundation
+
+
 class Client {
 
   private var id: String
@@ -5,22 +15,77 @@ class Client {
   private var realName: String?
   private var userName: String?
   private var hostName: String
-  private var modes: Int?
-  private var connection: ClientConnection
-  private var fullyIdentified: Bool
+  private var connection: ConnectionInterface
+  private var delegate: ConnectionDelegate?
+  private var registered: Bool
 
 
-  init(clientId id: String, hostName: String, connection: ClientConnection) {
+  convenience init(clientId id: String, hostName: String, connection: ConnectionInterface, handler: ConnectionDelegate) {
+    self.init(clientId: id, hostName: hostName, connection: connection)
+    self.delegate = handler
+  }
+
+
+  init(clientId id: String, hostName: String, connection: ConnectionInterface) {
     self.id = id
     self.hostName = hostName
     self.connection = connection
-    self.fullyIdentified = false
+    self.registered = false
   }
 
 
-  func send(message: String) {
-    self.connection.sendLine(message)
+  /*
+   * Send a message through the client connection
+  */
+  func send(identifier: String, replyCode: ReplyCode, message: String) {
+
+    do {
+      let idAndMessage = identifier + " " + message
+      let reply = MessageFactory.build(replyCode, message: idAndMessage)
+
+      try self.connection.sendLine(reply)
+    }
+    catch let error {
+      self.delegate?.handleError(self.id, error: error)
+    }
   }
+
+
+  /*
+   * Initiate a thread to start handling incoming messages from
+   * the client connection
+  */
+  func startReceiving() {
+
+    let handlerThread = NSThread() {
+
+      while true {
+        self.receive()
+      }
+    }
+
+    handlerThread.start()
+  }
+
+
+  /*
+   * Receieve a command from the client connection
+  */
+  private func receive() {
+
+    do {
+      let command = try self.connection.readLine()
+      self.delegate?.handleCommand(self.id, command: command)
+    }
+    catch let error {
+      self.delegate?.handleError(self.id, error: error)
+    }
+  }
+
+}
+
+
+extension Client {
 
 
   /*
@@ -80,13 +145,13 @@ class Client {
   }
 
 
-  func isFullyIdentified() -> Bool {
-    return self.fullyIdentified
+  func isRegistered() -> Bool {
+    return self.registered
   }
 
 
-  func identify() {
-    self.fullyIdentified = true
+  func register() {
+    self.registered = true
   }
 
 
