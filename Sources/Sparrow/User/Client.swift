@@ -8,7 +8,7 @@
 import Foundation
 
 
-class Client {
+class Client: ClientInterface {
 
   private var id: String
   private var nick: String?
@@ -140,7 +140,7 @@ extension Client {
   }
 
 
-  func getHostName() -> String? {
+  func getHostName() -> String {
     return self.hostName
   }
 

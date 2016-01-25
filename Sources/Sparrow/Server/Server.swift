@@ -13,12 +13,12 @@ class Server {
 
   private var ip: IP
   private var port: Int
-  private var logger: Logger
+  private var logger: LoggerInterface
   private var socket: TCPServerSocket
   private var serverManager: ServerManager
 
 
-  init?(port: Int, logger: Logger) {
+  init?(port: Int, logger: LoggerInterface) {
     self.port = port
     self.logger = logger
     self.serverManager = ServerManager()

@@ -5,7 +5,7 @@
  * Last modified time: 2016-01-21T14:30:07-08:00
 */
 
-protocol Logger {
+protocol LoggerInterface {
 
   func log(message: String, logLevel: LogLevel)
 }

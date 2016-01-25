@@ -10,7 +10,7 @@ class ClientManager {
   /*
    * Clients are indexed by their client id
   */
-  private var clients: [String: Client]
+  private var clients: [String: ClientInterface]
 
 
   init() {
@@ -22,7 +22,7 @@ class ClientManager {
    * @TODO remove hard coded localhost value, once we
    * are able to do host identification
   */
-  func createClient(connection: ClientConnection, handler: ConnectionDelegate) {
+  func createClient(connection: ConnectionInterface, handler: ConnectionDelegate) {
 
     let clientId = self.createClientId()
     let client   = Client(clientId: clientId, hostName: "localhost", connection: connection, handler: handler)
@@ -44,7 +44,7 @@ class ClientManager {
   /*
    * Retreive a client
   */
-  func getClient(clientId: String) -> Client? {
+  func getClient(clientId: String) -> ClientInterface? {
 
     if let client = self.clients[clientId] {
       return client

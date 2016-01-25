@@ -21,7 +21,7 @@ class ServerManager: ConnectionDelegate {
    * @TODO remove hard coded localhost value, once we
    * are able to do host identification
   */
-  func addConnection(connection: ClientConnection) {
+  func addConnection(connection: ConnectionInterface) {
     self.clientManager.createClient(connection, handler: self)
   }
 

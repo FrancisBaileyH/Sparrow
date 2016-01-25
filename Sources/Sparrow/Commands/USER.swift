@@ -27,7 +27,7 @@ class USER: Command, Executable {
    * Send the "Welcome" reply to the client to acknowledge the
    * connection has been registered
   */
-  func sendRegistrationAcknowledgement(client: Client) {
+  func sendRegistrationAcknowledgement(client: ClientInterface) {
 
       let message = ":Welcome to Test"
 
