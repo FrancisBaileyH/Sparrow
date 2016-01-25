@@ -7,7 +7,7 @@
 
 class NICK: Command, Executable {
 
-  func execute(clientId: String, managerInstance: ServerManager) {
+  func execute(clientId: String, managerInstance: ServerManagerInterface) {
 
     let client = managerInstance.getClientManager().getClient(clientId)
 

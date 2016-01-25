@@ -8,5 +8,5 @@
 protocol Executable: Cancellable {
 
   init(message: ClientMessage)
-  func execute(clientId: String, managerInstance: ServerManager)
+  func execute(clientId: String, managerInstance: ServerManagerInterface)
 }

@@ -1,12 +1,12 @@
 import Foundation
 
 
-class Channel {
+class Channel: ChannelInterface {
 
   private var chanName: String
   private var topic: String
   private var operators: [String]
-  private var clients: [String: Client]
+  private var clients: [String: ClientInterface]
 
 
   init(channelName name: String, channelTopic topic: String) {
@@ -17,7 +17,7 @@ class Channel {
   }
 
 
-  func getClientList() -> [String: Client] {
+  func getClientList() -> [String: ClientInterface] {
     return self.clients
   }
 }

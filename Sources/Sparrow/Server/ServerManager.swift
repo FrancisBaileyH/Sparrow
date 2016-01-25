@@ -7,13 +7,13 @@
 
 class ServerManager: ConnectionDelegate {
 
-  private var clientManager: ClientManager
-  private var channels: [String: Channel]
+  private var clientManager: ClientManagerInterface
+  private var channelManager: ChannelManagerInterface
 
 
   init() {
     self.clientManager = ClientManager()
-    self.channels = [:]
+    self.channelManager = ChannelManager()
   }
 
 
@@ -43,9 +43,13 @@ class ServerManager: ConnectionDelegate {
 }
 
 
-extension ServerManager {
+extension ServerManager: ServerManagerInterface {
 
-  func getClientManager() -> ClientManager {
+  func getClientManager() -> ClientManagerInterface {
     return self.clientManager
+  }
+
+  func getChannelManager() -> ChannelManagerInterface {
+    return self.channelManager
   }
 }

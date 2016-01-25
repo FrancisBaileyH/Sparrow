@@ -7,7 +7,7 @@
 
 class USER: Command, Executable {
 
-  func execute(clientId: String, managerInstance: ServerManager) {
+  func execute(clientId: String, managerInstance: ServerManagerInterface) {
 
     if let client = managerInstance.getClientManager().getClient(clientId) {
 

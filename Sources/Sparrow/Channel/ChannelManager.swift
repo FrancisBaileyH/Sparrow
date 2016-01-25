@@ -6,12 +6,12 @@
 */
 
 
-class ChannelManager {
+class ChannelManager: ChannelManagerInterface {
 
   /*
    * List of channels indexed by channel name
   */
-  private var channels: [String: Channel]
+  private var channels: [String: ChannelInterface]
 
 
   init() {
@@ -22,9 +22,9 @@ class ChannelManager {
   /*
    * Locate all channels that a client with a given nick resides
   */
-  func findChannelsForNick(nick: String) -> [Channel] {
+  func findChannelsForNick(nick: String) -> [ChannelInterface] {
 
-    var chans = [Channel]()
+    var chans = [ChannelInterface]()
 
     for (chanName, channel) in self.channels {
 

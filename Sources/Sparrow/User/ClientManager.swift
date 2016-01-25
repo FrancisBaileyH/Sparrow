@@ -5,7 +5,7 @@
  * Last modified time: 2016-01-21T13:50:48-08:00
 */
 
-class ClientManager {
+class ClientManager: ClientManagerInterface {
 
   /*
    * Clients are indexed by their client id
@@ -58,7 +58,7 @@ class ClientManager {
    * Generate a unique client id to associate with
    * each connection/client
   */
-  func createClientId() -> String {
+  private func createClientId() -> String {
 
     let clientId = Random.randomString(12)
 
