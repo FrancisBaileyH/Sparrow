@@ -7,7 +7,7 @@
 
 protocol ClientInterface {
 
-  func send(identifier: String, replyCode: ReplyCode, message: String)
+  func send(identifier: String, message: String)
   func startReceiving()
   func getFullyIdentifiedName() -> String?
   func getNick() -> String?

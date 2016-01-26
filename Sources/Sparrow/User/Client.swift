@@ -35,14 +35,12 @@ class Client: ClientInterface {
 
 
   /*
-   * Send a message through the client connection
+   * Send a message to the client
   */
-  func send(identifier: String, replyCode: ReplyCode, message: String) {
+  func send(identifier: String, message: String) {
 
     do {
-      let idAndMessage = identifier + " " + message
-      let reply = MessageFactory.build(replyCode, message: idAndMessage)
-
+      let reply = ":" + identifier + " " + message + "\r\n"
       try self.connection.sendLine(reply)
     }
     catch let error {

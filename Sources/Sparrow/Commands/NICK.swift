@@ -7,6 +7,7 @@
 
 class NICK: Command, Executable {
 
+
   func execute(clientId: String, managerInstance: ServerManagerInterface) {
 
     let client = managerInstance.getClientManager().getClient(clientId)
@@ -15,8 +16,8 @@ class NICK: Command, Executable {
 
       let nick = self.message.parameters[0]
 
-       if let _ = self.validateNick(nick){
-
+       if let error = self.validateNick(nick){
+        //  let message = 
        }
        else {
          client?.setNick(nick)
@@ -24,12 +25,18 @@ class NICK: Command, Executable {
     }
   }
 
+
+  private func respond(client: ClientInterface) {
+
+  }
+
+
  /*
   * @TODO add in actual validation
   *
   * nickname: ( letter / special ) *8( letter / digit / special / "-" )
  */
-  func validateNick(nick: String) -> ReplyCode? {
+  private func validateNick(nick: String) -> ReplyCode? {
 
     if nick.characters.count > 9 {
       return ReplyCode.ERR_ERRONEOUSNICKNAME

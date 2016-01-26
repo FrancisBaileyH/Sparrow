@@ -17,10 +17,6 @@ class ServerManager: ConnectionDelegate {
   }
 
 
-  /*
-   * @TODO remove hard coded localhost value, once we
-   * are able to do host identification
-  */
   func addConnection(connection: ConnectionInterface) {
     self.clientManager.createClient(connection, handler: self)
   }
@@ -29,6 +25,8 @@ class ServerManager: ConnectionDelegate {
   /*
    * @TODO, may need to make this function thread-safe as commands are potentially
    * modifying data at the same time
+   *
+   * @TODO, handle permissions, is user registered? is user op? etc
   */
   func handleCommand(clientId: String, command: Executable) {
     command.execute(clientId, managerInstance: self)
@@ -36,9 +34,8 @@ class ServerManager: ConnectionDelegate {
 
 
   func handleError(clientId: String, error: ErrorType) {
-    self.clientManager.removeClient(clientId)
+    // self.clientManager.removeClient(clientId)
   }
-
 
 }
 

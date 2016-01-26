@@ -7,6 +7,7 @@
 
 class USER: Command, Executable {
 
+
   func execute(clientId: String, managerInstance: ServerManagerInterface) {
 
     if let client = managerInstance.getClientManager().getClient(clientId) {
@@ -29,10 +30,10 @@ class USER: Command, Executable {
   */
   func sendRegistrationAcknowledgement(client: ClientInterface) {
 
-      let message = ":Welcome to Test"
-
-      if let identifier = client.getFullyIdentifiedName() {
-        client.send(identifier, replyCode: ReplyCode.RPL_WELCOME, message: message)
-      }
+    if let identifier = client.getFullyIdentifiedName() {
+      let message = ReplyCode.RPL_WELCOME.rawValue + " " + identifier + " :Welcome to Test"
+      client.send("localhost", message: message)
+    }
   }
+
 }

@@ -139,6 +139,9 @@ public enum ReplyCode: String {
   case RPL_ADMINLOC2 = "258"
   case RPL_ADMINEMAIL = "259"
   case RPL_TRYAGAIN = "263"
+  case RPL_PONG = "PONG"
+  case RPL_JOIN = "JOIN"
+  case RPL_PRIVMSG = "PRIVMSG"
 }
 
 
