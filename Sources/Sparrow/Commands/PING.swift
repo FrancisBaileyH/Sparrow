@@ -9,10 +9,8 @@ class PING: Command, Executable {
 
 
   func execute(clientId: String, managerInstance: ServerManagerInterface) {
-    print("\(clientId)")
 
     if let client = managerInstance.getClientManager().getClient(clientId) {
-      print("Called")
         self.respond(client)
     }
   }
