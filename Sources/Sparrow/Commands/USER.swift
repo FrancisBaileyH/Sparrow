@@ -12,7 +12,10 @@ class USER: Command, Executable {
 
     if let client = managerInstance.getClientManager().getClient(clientId) {
 
-      if !client.isRegistered() && client.getNick() != nil {
+      if !client.isRegistered()
+      && client.getNick() != nil
+      && self.message.parameters.count >= 1 {
+
         client.setUserName(self.message.parameters[0])
         client.register()
         self.sendRegistrationAcknowledgement(client)

@@ -29,7 +29,10 @@ class ServerManager: ConnectionDelegate {
    * @TODO, handle permissions, is user registered? is user op? etc
   */
   func handleCommand(clientId: String, command: Executable) {
-    command.execute(clientId, managerInstance: self)
+
+    if !command.isCancelled() {
+      command.execute(clientId, managerInstance: self)
+    }
   }
 
 
