@@ -9,4 +9,5 @@ protocol ServerManagerInterface {
 
   func getClientManager() -> ClientManagerInterface
   func getChannelManager() -> ChannelManagerInterface
+  func getConfigManager() -> ConfigManagerInterface
 }

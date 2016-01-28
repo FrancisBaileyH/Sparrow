@@ -9,9 +9,11 @@ class ServerManager: ConnectionDelegate {
 
   private var clientManager: ClientManagerInterface
   private var channelManager: ChannelManagerInterface
+  private var configManager: ConfigManagerInterface
 
 
-  init() {
+  init(config: ConfigManagerInterface) {
+    self.configManager = config
     self.clientManager = ClientManager()
     self.channelManager = ChannelManager()
   }
@@ -51,5 +53,9 @@ extension ServerManager: ServerManagerInterface {
 
   func getChannelManager() -> ChannelManagerInterface {
     return self.channelManager
+  }
+
+  func getConfigManager() -> ConfigManagerInterface {
+    return self.configManager
   }
 }

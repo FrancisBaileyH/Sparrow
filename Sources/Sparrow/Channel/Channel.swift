@@ -20,4 +20,12 @@ class Channel: ChannelInterface {
   func getClientList() -> [String: ClientInterface] {
     return self.clients
   }
+
+
+  func broadcast(identifier: String, message: String) {
+
+    for (_, client) in self.clients {
+      client.send(identifier, message: message)
+    }
+  }
 }

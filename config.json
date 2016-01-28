@@ -1,0 +1,11 @@
+{
+  "server-name": "localhost",
+  "operators": [
+    {
+      "username": "testOP",
+      "password": "password"
+    }
+  ],
+  "welcome-message": "Welcome to localhost",
+  "motd": "This is a test MOTD"
+}
