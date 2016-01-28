@@ -7,5 +7,10 @@
     }
   ],
   "welcome-message": "Welcome to localhost",
-  "motd": "This is a test MOTD"
+  "motd": "This is a test MOTD",
+  "channels": [
+    "test",
+    "help",
+    "chat"
+  ]
 }

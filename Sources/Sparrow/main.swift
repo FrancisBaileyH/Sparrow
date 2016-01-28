@@ -18,13 +18,6 @@ class MockLogger: LoggerInterface {
 
 if let config = ConfigManager(configFile: "./config.json") {
 
-  do {
-    try config.validateConfig()
-    let server = Server(port: 10022, logger: MockLogger(), config: config)
-    server?.listen()
-  }
-  catch _ {
-    print("Missing values")
-  }
-
+  let server = Server(port: 10022, logger: MockLogger(), config: config)
+  server?.listen()
 }

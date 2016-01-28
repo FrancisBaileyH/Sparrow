@@ -11,30 +11,31 @@ class PING: Command, Executable {
   func execute(clientId: String, managerInstance: ServerManagerInterface) {
 
     if let client = managerInstance.getClientManager().getClient(clientId) {
-        self.respond(client)
+        let serverName = managerInstance.getConfigManager().getConfig().serverName
+        self.handlePing(client, serverName: serverName)
     }
   }
 
 
-  private func respond(client: ClientInterface) {
+  private func handlePing(client: ClientInterface, serverName: String) {
 
     let parameters = self.message.parameters
+    var message: String = ""
 
     if parameters.count == 1 {
 
-      let message = ReplyCode.RPL_PONG.rawValue + " " + parameters[0]
-      client.send("localhost", message: message)
-    }
-    else if parameters.count >= 2 {
-
-      let message = ReplyCode.ERR_NOSUCHSERVER.rawValue + " PING " + parameters[0] + " " + parameters[1]
-      client.send("localhost", message: message)
+      message = ReplyCode.RPL_PONG.rawValue + " " + parameters[0]
     }
     else if parameters.count < 1 {
 
-      let message = ReplyCode.ERR_NEEDMOREPARAMS.rawValue + " PING"
-      client.send("localhost", message: message)
+      message = ReplyCode.ERR_NEEDMOREPARAMS.rawValue + " PING"
     }
+    else {
+
+      message = ReplyCode.ERR_NOSUCHSERVER.rawValue + " PING " + parameters[0] + " " + parameters[1]
+    }
+
+    client.send(serverName, message: message)
   }
 
 

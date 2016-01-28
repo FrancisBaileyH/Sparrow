@@ -7,5 +7,6 @@
 
 protocol ConfigManagerInterface {
 
-  func getConfigValue(key: String) -> AnyObject?
+  func getConfig() -> Config
+  func setConfig(config: Config)
 }
