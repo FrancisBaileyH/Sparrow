@@ -14,8 +14,21 @@ class ChannelManager: ChannelManagerInterface {
   private var channels: [String: ChannelInterface]
 
 
-  init() {
+  init(channels: [(String, String?)]?) {
     self.channels = [:]
+
+    if let chans = channels {
+
+      for channel in chans {
+
+        let name = channel.0
+        let topic = channel.1
+
+        let chan = Channel(channelName: name, channelTopic: topic)
+
+        self.channels[name] = chan
+      }
+    }
   }
 
 
@@ -34,6 +47,11 @@ class ChannelManager: ChannelManagerInterface {
     }
 
     return chans
+  }
+
+
+  func getChannels() -> [ChannelInterface] {
+    return self.channels
   }
 
 }

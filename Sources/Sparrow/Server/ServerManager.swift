@@ -15,7 +15,7 @@ class ServerManager: ConnectionDelegate {
   init(config: ConfigManagerInterface) {
     self.configManager = config
     self.clientManager = ClientManager()
-    self.channelManager = ChannelManager()
+    self.channelManager = ChannelManager(channels: self.configManager.getConfig().channels)
   }
 
 

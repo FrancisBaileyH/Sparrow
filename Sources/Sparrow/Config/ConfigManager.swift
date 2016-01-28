@@ -29,7 +29,11 @@ class ConfigManager: ConfigManagerInterface {
     self.config = Config()
     self.config.serverName = "localhost"
     self.config.welcomeMessage = "Welcome to " + self.config.serverName
-    self.config.channels = ["help", "chat", "casual"]
+    self.config.channels = [
+      ("help", nil),
+      ("chat", nil),
+      ("casual", nil)
+    ]
   }
 
 

@@ -9,7 +9,7 @@ struct Config {
 
   var serverName: String!
   var operators: [(String, String)]!
-  var channels: [String]?
+  var channels: [(String, String?)]?
   var welcomeMessage: String!
   var motd: String?
 }
