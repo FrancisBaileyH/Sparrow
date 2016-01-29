@@ -12,13 +12,15 @@ class USER: Command, Executable {
 
     if let client = managerInstance.getClientManager().getClient(clientId) {
 
+      let config = managerInstance.getConfigManager().getConfig()
+
       if !client.isRegistered()
       && client.getNick() != nil
       && self.message.parameters.count >= 1 {
 
         client.setUserName(self.message.parameters[0])
         client.register()
-        self.sendRegistrationAcknowledgement(client)
+        self.sendRegistrationAcknowledgement(client, config: config)
       }
     }
 
@@ -31,11 +33,11 @@ class USER: Command, Executable {
    * Send the "Welcome" reply to the client to acknowledge the
    * connection has been registered
   */
-  func sendRegistrationAcknowledgement(client: ClientInterface) {
+  func sendRegistrationAcknowledgement(client: ClientInterface, config: Config) {
 
     if let identifier = client.getFullyIdentifiedName() {
-      let message = ReplyCode.RPL_WELCOME.rawValue + " " + identifier + " :Welcome to Test"
-      client.send("localhost", message: message)
+      let message = ReplyCode.RPL_WELCOME.rawValue + " " + identifier + " :" + config.welcomeMessage
+      client.send(config.serverName, message: message)
     }
   }
 
