@@ -7,6 +7,6 @@
 
 protocol ConnectionDelegate {
 
-  func handleCommand(clientId: String, command: Executable)
-  func handleError(clientId: String, error: ErrorType)
+  func handleCommand(client: ClientInterface, command: Executable)
+  func handleError(client: ClientInterface, error: ErrorType)
 }

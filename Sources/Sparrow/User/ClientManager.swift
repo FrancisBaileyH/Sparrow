@@ -60,7 +60,7 @@ class ClientManager: ClientManagerInterface {
   func clientNickExists(nick: String) -> Bool {
 
     for (_, client) in self.clients {
-      if let cliNick = client.getNick() where cliNick == nick {
+      if client.isRegistered() && client.getNick() == nick {
         return true
       }
     }

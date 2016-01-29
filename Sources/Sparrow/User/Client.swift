@@ -11,9 +11,9 @@ import Foundation
 class Client: ClientInterface {
 
   private var id: String
-  private var nick: String?
+  private var nick: String!
   private var realName: String?
-  private var userName: String?
+  private var userName: String!
   private var hostName: String
   private var connection: ConnectionInterface
   private var delegate: ConnectionDelegate?
@@ -44,7 +44,7 @@ class Client: ClientInterface {
       try self.connection.sendLine(reply)
     }
     catch let error {
-      self.delegate?.handleError(self.id, error: error)
+      self.delegate?.handleError(self, error: error)
     }
   }
 
@@ -73,10 +73,10 @@ class Client: ClientInterface {
 
     do {
       let command = try self.connection.readLine()
-      self.delegate?.handleCommand(self.id, command: command)
+      self.delegate?.handleCommand(self, command: command)
     }
     catch let error {
-      self.delegate?.handleError(self.id, error: error)
+      self.delegate?.handleError(self, error: error)
     }
   }
 
@@ -90,20 +90,18 @@ extension Client {
    * Compile a users identifiers into a proper client identifier
    * e.g. nick!username@localhost
   */
-  func getFullyIdentifiedName() -> String? {
+  func getFullyIdentifiedName() -> String {
 
-    if let nickN = self.nick, let userN = self.userName {
-      return nickN + "!" + userN + "@" + self.hostName
-    }
-
-    return nil
+    // if let nickN = self.nick, let userN = self.userName {
+      // return nickN + "!" + userN + "@" + self.hostName
+      return self.nick + "!" + self.userName + "@" + self.hostName
   }
 
 
   /*
    * Getters and setters
   */
-  func getNick() -> String? {
+  func getNick() -> String {
     return self.nick
   }
 
@@ -128,7 +126,7 @@ extension Client {
   }
 
 
-  func getUserName() -> String? {
+  func getUserName() -> String {
     return self.userName
   }
 

@@ -9,13 +9,13 @@ protocol ClientInterface {
 
   func send(identifier: String, message: String)
   func startReceiving()
-  func getFullyIdentifiedName() -> String?
-  func getNick() -> String?
+  func getFullyIdentifiedName() -> String
+  func getNick() -> String
   func setNick(nick: String)
   func setRealName(name: String)
   func getRealName() -> String?
   func setUserName(name: String)
-  func getUserName() -> String?
+  func getUserName() -> String
   func setHostName(name: String)
   func getHostName() -> String
   func isRegistered() -> Bool

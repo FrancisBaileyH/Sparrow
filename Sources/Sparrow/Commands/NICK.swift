@@ -8,32 +8,28 @@
 class NICK: Command, Executable {
 
 
-  func execute(clientId: String, managerInstance: ServerManagerInterface) {
+  func execute(client: ClientInterface, managerInstance: ServerManagerInterface) {
 
     let config        = managerInstance.getConfigManager().getConfig()
     let clientManager = managerInstance.getClientManager()
-    let client        = clientManager.getClient(clientId)
 
-    if self.message.parameters.count >= 1  {
 
-      let nick = self.message.parameters[0]
+    if let error = self.validateNick(self.message.parameters, clientManager: clientManager) {
+      let message = error.rawValue
+      client.send(config.serverName, message: message)
 
-      if let error = self.validateNick(nick, clientManager: clientManager) {
-        let message = error.rawValue
-        client?.send(config.serverName, message: message)
-      }
-      else {
-
-        if let cli = client where cli.isRegistered() {
-          let channelManager = managerInstance.getChannelManager()
-          let oldNick = cli.getNick()
-          self.notifyNickChange(oldNick!, newNick: nick, channelManager: channelManager)
-        }
-        else {
-          client?.setNick(nick)
-        }
-      }
+      return
     }
+
+    let nick = self.message.parameters[0]
+    client.setNick(nick)
+
+    if client.isRegistered() {
+      let channelManager = managerInstance.getChannelManager()
+      let oldNick = client.getNick()
+      self.notifyNickChange(oldNick, newNick: nick, channelManager: channelManager)
+    }
+
   }
 
 
@@ -41,20 +37,26 @@ class NICK: Command, Executable {
    * Notify every user that client is visible to that their nick has changed
   */
   private func notifyNickChange(oldNick: String, newNick: String, channelManager: ChannelManagerInterface) {
-    //
-    // for channel in channelManager.findChannelsForNick(nick) {
-    //   channel.broadcast(oldNick:
-    // }
+
+    for channel in channelManager.findChannelsForNick(oldNick) {
+      //  channel.broadcast(oldNick:
+    }
 
   }
 
 
- /*
-  * @TODO add in actual validation
-  *
-  * nickname: ( letter / special ) *8( letter / digit / special / "-" )
- */
-  private func validateNick(nick: String, clientManager: ClientManagerInterface) -> ReplyCode? {
+  /*
+   * @TODO add in actual validation
+   *
+   * nickname: ( letter / special ) *8( letter / digit / special / "-" )
+  */
+  private func validateNick(parameters: [String], clientManager: ClientManagerInterface) -> ReplyCode? {
+
+    guard parameters.count >= 1 else {
+      return ReplyCode.ERR_NEEDMOREPARAMS
+    }
+
+    let nick = parameters[0]
 
     if nick.characters.count > 9 {
       return ReplyCode.ERR_ERRONEOUSNICKNAME

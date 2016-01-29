@@ -8,12 +8,10 @@
 class PING: Command, Executable {
 
 
-  func execute(clientId: String, managerInstance: ServerManagerInterface) {
+  func execute(client: ClientInterface, managerInstance: ServerManagerInterface) {
 
-    if let client = managerInstance.getClientManager().getClient(clientId) {
-        let serverName = managerInstance.getConfigManager().getConfig().serverName
-        self.handlePing(client, serverName: serverName)
-    }
+    let serverName = managerInstance.getConfigManager().getConfig().serverName
+    self.handlePing(client, serverName: serverName)
   }
 
 

@@ -8,22 +8,17 @@
 class USER: Command, Executable {
 
 
-  func execute(clientId: String, managerInstance: ServerManagerInterface) {
+  func execute(client: ClientInterface, managerInstance: ServerManagerInterface) {
 
-    if let client = managerInstance.getClientManager().getClient(clientId) {
+    let config = managerInstance.getConfigManager().getConfig()
 
-      let config = managerInstance.getConfigManager().getConfig()
+    if !client.isRegistered()
+    && self.message.parameters.count >= 1 {
 
-      if !client.isRegistered()
-      && client.getNick() != nil
-      && self.message.parameters.count >= 1 {
-
-        client.setUserName(self.message.parameters[0])
-        client.register()
-        self.sendRegistrationAcknowledgement(client, config: config)
-      }
+      client.setUserName(self.message.parameters[0])
+      client.register()
+      self.sendRegistrationAcknowledgement(client, config: config)
     }
-
   }
 
 
@@ -35,10 +30,9 @@ class USER: Command, Executable {
   */
   func sendRegistrationAcknowledgement(client: ClientInterface, config: Config) {
 
-    if let identifier = client.getFullyIdentifiedName() {
-      let message = ReplyCode.RPL_WELCOME.rawValue + " " + identifier + " :" + config.welcomeMessage
-      client.send(config.serverName, message: message)
-    }
+    let identifier = client.getFullyIdentifiedName()
+    let message = ReplyCode.RPL_WELCOME.rawValue + " " + identifier + " :" + config.welcomeMessage
+    client.send(config.serverName, message: message)
   }
 
 }
