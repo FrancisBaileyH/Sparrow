@@ -10,4 +10,5 @@ protocol ClientManagerInterface {
   func createClient(connection: ConnectionInterface, handler: ConnectionDelegate)
   func removeClient(clientId: String)
   func getClient(clientId: String) -> ClientInterface?
+  func clientNickExists(nick: String) -> Bool
 }

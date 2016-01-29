@@ -50,7 +50,7 @@ class ChannelManager: ChannelManagerInterface {
   }
 
 
-  func getChannels() -> [ChannelInterface] {
+  func getChannels() -> [String: ChannelInterface] {
     return self.channels
   }
 

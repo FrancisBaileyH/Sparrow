@@ -22,10 +22,27 @@ class Channel: ChannelInterface {
   }
 
 
+  /*
+   * Broadcast to all clients except the original sender
+  */
+  func broadcast(nick: String, identifier: String, message: String) {
+
+    for (nickInChan, client) in self.clients {
+      if nickInChan != nick {
+        client.send(identifier, message: message)
+      }
+    }
+  }
+
+
+  /*
+   * Broadcast indescriminately
+  */
   func broadcast(identifier: String, message: String) {
 
     for (_, client) in self.clients {
       client.send(identifier, message: message)
     }
   }
+
 }

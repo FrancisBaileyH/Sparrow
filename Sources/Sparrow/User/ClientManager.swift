@@ -55,6 +55,21 @@ class ClientManager: ClientManagerInterface {
 
 
   /*
+   * Check for the existence of a client nickname on the server
+  */
+  func clientNickExists(nick: String) -> Bool {
+
+    for (_, client) in self.clients {
+      if let cliNick = client.getNick() where cliNick == nick {
+        return true
+      }
+    }
+
+    return false
+  }
+
+
+  /*
    * Generate a unique client id to associate with
    * each connection/client
   */

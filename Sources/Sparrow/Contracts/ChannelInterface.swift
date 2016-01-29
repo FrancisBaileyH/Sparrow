@@ -7,4 +7,6 @@
 
 protocol ChannelInterface {
   func getClientList() -> [String: ClientInterface]
+  func broadcast(nick: String, identifier: String, message: String)
+  func broadcast(identifier: String, message: String)
 }
