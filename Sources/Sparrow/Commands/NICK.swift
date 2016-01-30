@@ -22,24 +22,23 @@ class NICK: Command, Executable {
     }
 
     let nick = self.message.parameters[0]
-    client.setNick(nick)
 
     if client.isRegistered() {
       let channelManager = managerInstance.getChannelManager()
-      let oldNick = client.getNick()
-      self.notifyNickChange(oldNick, newNick: nick, channelManager: channelManager)
+      self.notifyNickChange(client, newNick: nick, channelManager: channelManager)
     }
 
+    client.setNick(nick)
   }
 
 
   /*
    * Notify every user that client is visible to that their nick has changed
   */
-  private func notifyNickChange(oldNick: String, newNick: String, channelManager: ChannelManagerInterface) {
+  private func notifyNickChange(client: ClientInterface, newNick: String, channelManager: ChannelManagerInterface) {
 
-    for channel in channelManager.findChannelsForNick(oldNick) {
-      //  channel.broadcast(oldNick:
+    for channel in channelManager.findChannelsForNick(client.getNick()) {
+      channel.broadcast(client.getHostmask(), message: " NICK: " + newNick)
     }
 
   }

@@ -30,7 +30,7 @@ class USER: Command, Executable {
   */
   func sendRegistrationAcknowledgement(client: ClientInterface, config: Config) {
 
-    let identifier = client.getFullyIdentifiedName()
+    let identifier = client.getHostmask()
     let message = ReplyCode.RPL_WELCOME.rawValue + " " + identifier + " :" + config.welcomeMessage
     client.send(config.serverName, message: message)
   }

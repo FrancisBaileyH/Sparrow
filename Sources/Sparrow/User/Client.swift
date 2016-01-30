@@ -90,10 +90,8 @@ extension Client {
    * Compile a users identifiers into a proper client identifier
    * e.g. nick!username@localhost
   */
-  func getFullyIdentifiedName() -> String {
+  func getHostmask() -> String {
 
-    // if let nickN = self.nick, let userN = self.userName {
-      // return nickN + "!" + userN + "@" + self.hostName
       return self.nick + "!" + self.userName + "@" + self.hostName
   }
 

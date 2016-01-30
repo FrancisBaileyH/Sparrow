@@ -9,7 +9,7 @@ protocol ClientInterface {
 
   func send(identifier: String, message: String)
   func startReceiving()
-  func getFullyIdentifiedName() -> String
+  func getHostmask() -> String
   func getNick() -> String
   func setNick(nick: String)
   func setRealName(name: String)
