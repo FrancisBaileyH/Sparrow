@@ -1,6 +1,6 @@
 # Sparrow
 
-A work in progress IRC Server, written in Swift.
+A (very) work in progress IRC Server, written in Swift. Currently only connection registration works. I'm in the process of solidifying the core system before implementing remaining commands.
 
 ## Installation
 
